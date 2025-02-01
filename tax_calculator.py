@@ -270,12 +270,14 @@ st.markdown("Ask any questions you have about the tax regimes and get personaliz
 st.markdown("""
 <style>
 .stTextInput>div>div>input {
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;
+    min-height: 60px !important;
+    width: 100% !important;
     background: linear-gradient(to right, rgba(74, 74, 74, 0.2), rgba(45, 45, 45, 0.3)) !important;
     border: 2px solid rgba(74, 74, 74, 0.5) !important;
     border-radius: 15px !important;
-    padding: 1rem 1.5rem !important;
-    margin: 1rem 0 !important;
+    padding: 1.2rem 1.5rem !important;
+    margin: 1.5rem 0 !important;
     color: #ffffff !important;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) !important;
     transition: all 0.3s ease !important;
@@ -287,6 +289,14 @@ st.markdown("""
     transform: translateY(-2px) !important;
 }
 
+.stTextInput>div {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.element-container {
+    width: 100% !important;
+}
 .stTextInput>div>div>input::placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
     font-style: italic;
