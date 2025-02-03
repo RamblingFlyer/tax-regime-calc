@@ -3,6 +3,14 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from groq import Groq
+from pymongo import MongoClient
+from datetime import datetime
+
+MONGO_URI = "mongodb+srv://ananyabhatblr:GOfXi3twhYNP4rs5@cluster0.zyc9x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = MongoClient(MONGO_URI)
+db = client["your_database"]
+collection = db["your_collection"]
+questions_collection = db["questions"]
 
 # Set page config
 st.set_page_config(
@@ -226,14 +234,15 @@ Provide a comprehensive analysis in this format:
 3. Additional financial planning tips based on their current tax situation
 """
 
+
 # Initialize Groq client
-client = Groq(
-    api_key="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"
+client_groq = Groq(
+    api_key="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"
 )
 
 with st.spinner('Generating personalized recommendation...'):
     try:
-        completion = client.chat.completions.create(
+        completion = client_groq.chat.completions.create(
             model="mixtral-8x7b-32768",
             messages=[
                 {"role": "system", "content": "You are a knowledgeable Indian tax advisor providing personalized recommendations."},
@@ -304,8 +313,8 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
+user_question = st.text_input("User Question", placeholder="Example: What are the main differences between old and new tax regimes?", key="query_box", label_visibility="collapsed")
 
-user_question = st.text_input("", placeholder="Example: What are the main differences between old and new tax regimes? Or ask about your specific tax situation.", key="query_box")
 
 if user_question:
     with st.spinner('Analyzing your question...'):
@@ -324,7 +333,7 @@ if user_question:
             but conversational.
             """
             
-            completion = client.chat.completions.create(
+            completion = client_groq.chat.completions.create(
                 model="mixtral-8x7b-32768",
                 messages=[
                     {"role": "system", "content": "You are a knowledgeable Indian tax advisor. Provide accurate, helpful answers about Indian tax regimes and regulations."},
@@ -340,6 +349,15 @@ if user_question:
             {completion.choices[0].message.content}
             </div>
             """, unsafe_allow_html=True)
+
+            # Store user question in MongoDB
+            questions_collection.insert_one({
+                "question": user_question,
+                "asked_at": datetime.now(),
+                "answer": completion.choices[0].message.content
+            })
             
         except Exception as e:
             st.error("Unable to process your question. Please try again later.")
+    
+
