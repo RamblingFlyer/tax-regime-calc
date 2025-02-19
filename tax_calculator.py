@@ -237,7 +237,7 @@ Provide a comprehensive analysis in this format:
 
 # Initialize Groq client
 client_groq = Groq(
-    api_key="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"
+    api_key="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"
 )
 
 with st.spinner('Generating personalized recommendation...'):
