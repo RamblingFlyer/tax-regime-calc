@@ -6,7 +6,7 @@ from groq import Groq
 from pymongo import MongoClient
 from datetime import datetime
 
-MONGO_URI = "mongodb+srv://ananyabhatblr:GOfXi3twhYNP4rs5@cluster0.zyc9x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGO_URI = "mongodb+srv://Payrolluser:payrolluser@cluster0.ccvba.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
 db = client["your_database"]
 collection = db["your_collection"]
